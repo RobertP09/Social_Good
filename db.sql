@@ -3,8 +3,9 @@ CREATE DATABASE teacher_helper;
 CREATE TABLE IF NOT EXISTS users(
     user_id SERIAL NOT NULL,
     user_name VARCHAR(255) NOT NULL,
-    user_email varchar(50) NOT NULL,
+    user_email VARCHAR(50) NOT NULL,
     password VARCHAR(255) NOT NULL,
+    user_is_Admin BOOLEAN NOT NULL DEFAULT 'false',
     PRIMARY KEY(user_id)
 );
 
