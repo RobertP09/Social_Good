@@ -1,18 +1,27 @@
 const db = require("../db");
 const bcrypt = require("bcryptjs");
+const { validationResult } = require("express-validator");
 const generateToken = require("../services/generateToken");
 
 const loginGet = async (req, res) => {
     try {
-        const user = await db.query("SELECT user_id, user_name, user_email, user_is_admin FROM users WHERE user_id = $1",
+        // eslint-disable-next-line
+        const query = await db.query("SELECT user_id, user_name, user_email, user_is_admin FROM users WHERE user_id = $1",
             [req.user.id]);
-        return res.status(200).json({ status: "Success", user });
+
+        return res.status(200).json({ status: "Success" });
     } catch (err) {
         return res.status(401).json({ error: err.message });
     }
 };
 
 const loginPost = async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() });
+    }
+
     try {
         // Destructure the request
         const { user_email, password } = req.body;
