@@ -11,6 +11,7 @@
 		"ecmaVersion": 6
 	},
 	"rules": {
+		"max-len": 2,
 		"semi": ["error", "always"],
 		"quotes": ["error", "double"],
 		"no-unused-vars": [

@@ -26,13 +26,21 @@ const loginPost = async (req, res) => {
         // Destructure the request
         const { user_email, password } = req.body;
         // Check db and see if the user exists
-        const checkUserExists = await db.query("SELECT  user_id, user_email, password FROM users WHERE user_email = $1", [user_email]);
+        const checkUserExists = await db.query(
+            `SELECT  user_id, user_email, password FROM users 
+            WHERE user_email = $1`,
+            [user_email]);
         //If exists, return error
         if (checkUserExists.rowCount === 0) {
-            return res.status(400).json({ status: "Failure", msg: "Account does not exists" });
+            return res.status(400).json({
+                status: "Failure",
+                msg: "Account does not exists"
+            });
         }
         // Compare passwords
-        const matchPassword = await bcrypt.compare(password, checkUserExists.rows[0].password);
+        const matchPassword = await bcrypt.compare(
+            password, checkUserExists.rows[0].password
+        );
         // Based on match
         if (matchPassword === false) {
             return res.status(401).json({ msg: "Incorrect login information" });
@@ -46,11 +54,19 @@ const loginPost = async (req, res) => {
 
         const token = await generateToken(payload);
 
-        return res.status(200).json({ status: "Success", msg: "Login successful", token });
+        return res.status(200).json({
+            status: "Success",
+            msg: "Login successful",
+            token
+        });
 
     } catch (err) {
         console.log(err);
-        return res.status(200).json({ status: "Failure", msg: "Login error", err });
+        return res.status(200).json({
+            status: "Failure",
+            msg: "Login error",
+            error: err
+        });
     }
 };
 

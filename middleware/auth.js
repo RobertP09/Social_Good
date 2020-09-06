@@ -6,7 +6,10 @@ module.exports = function (req, res, next) {
 
     // Check if no token sent
     if (!token) {
-        return res.status(401).json({ status: "Failure", msg: "No Token, authorization denied " });
+        return res.status(401).json({
+            status: "Failure",
+            msg: "No Token, authorization denied "
+        });
     }
 
     // Verify token
@@ -16,6 +19,10 @@ module.exports = function (req, res, next) {
         req.user = decoded.user;
         next();
     } catch (err) {
-        return res.status(401).json({ status: "Failure", msg: "Token Invalid", error: err.message });
+        return res.status(401).json({
+            status: "Failure",
+            msg: "Token Invalid",
+            error: err.message
+        });
     }
 };
