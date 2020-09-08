@@ -9,7 +9,7 @@ const loginGet = async (req, res) => {
         const query = await db.query("SELECT user_id, user_name, user_email, user_is_admin FROM users WHERE user_id = $1",
             [req.user.id]);
 
-        return res.status(200).json({ status: "Success" });
+        return res.status(200).json({ status: "Success", data: query.rows[0] });
     } catch (err) {
         return res.status(401).json({ error: err.message });
     }

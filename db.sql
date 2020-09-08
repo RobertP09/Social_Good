@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS profiles(
     profile_school VARCHAR(255),
     profile_grade VARCHAR(255),
     profile_about TEXT,
+    profile_image VARCHAR(255),
     user_id INT REFERENCES users (user_id)
 );
 
